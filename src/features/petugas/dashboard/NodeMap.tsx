@@ -1,66 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { LeafletMapProps, MapMarker } from "./LeafletMap";
-
-const mapMarkers: MapMarker[] = [
-    {
-        id: "NODE-01",
-        lat: -6.8912,
-        lng: 107.5921,
-        sub: "Tikungan Pagarsari",
-        tone: "low",
-        score: "42 / 100",
-        riskLabel: "Rendah",
-        metrics: [
-            { label: "Rata-rata Kecepatan", value: "28 km/jam" },
-            { label: "Kendaraan Terdeteksi", value: "11" },
-            { label: "Kondisi Jalan", value: "Normal" },
-        ],
-    },
-    {
-        id: "NODE-02",
-        lat: -6.9015,
-        lng: 107.6123,
-        sub: "Tikungan Cibeureum",
-        tone: "medium",
-        score: "65 / 100",
-        riskLabel: "Medium",
-        metrics: [
-            { label: "Rata-rata Kecepatan", value: "39 km/jam" },
-            { label: "Kendaraan Terdeteksi", value: "14" },
-            { label: "Kondisi Jalan", value: "Licin" },
-        ],
-    },
-    {
-        id: "NODE-03",
-        lat: -6.9150,
-        lng: 107.6280,
-        sub: "Tikungan Baron",
-        tone: "high",
-        score: "87 / 100",
-        riskLabel: "Tinggi",
-        metrics: [
-            { label: "Rata-rata Kecepatan", value: "47 km/jam" },
-            { label: "Kendaraan Terdeteksi", value: "18" },
-            { label: "Kondisi Jalan", value: "2 arah berlawanan" },
-        ],
-    },
-    {
-        id: "NODE-04",
-        lat: -6.9210,
-        lng: 107.6410,
-        sub: "Tikungan Sukamaju",
-        tone: "low",
-        score: "38 / 100",
-        riskLabel: "Rendah",
-        metrics: [
-            { label: "Rata-rata Kecepatan", value: "25 km/jam" },
-            { label: "Kendaraan Terdeteksi", value: "8" },
-            { label: "Kondisi Jalan", value: "Normal" },
-        ],
-    },
-];
+import type { LeafletMapProps } from "./type";
+import { mapMarkers } from "./mockdata";
 
 const LeafletMap = dynamic<LeafletMapProps>(
     () => import("./LeafletMap").then((mod) => mod.default),
@@ -86,7 +28,7 @@ export default function NodeMap() {
             <div className="mt-3 h-80 w-full border border-gray-200 relative z-0">
                 <LeafletMap
                     mapMarkers={mapMarkers}
-                    centerPosition={[-6.9015, 107.6123]}
+                    centerPosition={[-0.9485, 100.4735]}
                 />
             </div>
         </section>
