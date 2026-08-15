@@ -1,4 +1,4 @@
-import { TrendPoint } from "./type";
+import { TrendPoint } from "@/types";
 
 type RiskTrendChartProps = {
     data: TrendPoint[];

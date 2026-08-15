@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { Announcement } from "./type";
+import { Announcement } from "@/types";
+import { MOCK_NODE_OPTIONS } from "@/data/mockData";
 
 type FormPengumumanProps = {
     onAddAnnouncement: (newAnnouncement: Announcement) => void;
@@ -9,15 +10,20 @@ type FormPengumumanProps = {
 
 export default function AnnouncementForm({ onAddAnnouncement }: FormPengumumanProps) {
     const [title, setTitle] = useState("");
-    const [nodeLocation, setNodeLocation] = useState("");
+    const [selectedNodeId, setSelectedNodeId] = useState(MOCK_NODE_OPTIONS[0]?.id || "");
     const [description, setDescription] = useState("");
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        if (!title.trim() || !nodeLocation.trim() || !description.trim()) {
+        if (!title.trim() || !selectedNodeId || !description.trim()) {
             return;
         }
+
+        const matchedNode = MOCK_NODE_OPTIONS.find((n) => n.id === selectedNodeId);
+        const nodeLocationLabel = matchedNode
+            ? `${matchedNode.name} (${matchedNode.id})`
+            : selectedNodeId;
 
         const now = new Date();
         const formattedDate = now.toLocaleDateString("id-ID", {
@@ -31,7 +37,7 @@ export default function AnnouncementForm({ onAddAnnouncement }: FormPengumumanPr
         const newEntry: Announcement = {
             id: `ANN-${now.getFullYear()}-${Math.floor(100 + Math.random() * 900)}`,
             title: title.trim(),
-            nodeLocation: nodeLocation.trim(),
+            nodeLocation: nodeLocationLabel,
             description: description.trim(),
             createdAt: formattedDate,
             author: "Petugas",
@@ -40,7 +46,7 @@ export default function AnnouncementForm({ onAddAnnouncement }: FormPengumumanPr
         onAddAnnouncement(newEntry);
 
         setTitle("");
-        setNodeLocation("");
+        setSelectedNodeId(MOCK_NODE_OPTIONS[0]?.id || "");
         setDescription("");
     };
 
@@ -71,19 +77,23 @@ export default function AnnouncementForm({ onAddAnnouncement }: FormPengumumanPr
                     />
                 </div>
 
-                {/* 2. Lokasi Tikungan / Node */}
+                {/* 2. Lokasi Tikungan / Node (Select Box Dinamis dari MOCK_NODE_OPTIONS) */}
                 <div>
                     <label className="block font-semibold text-gray-700 mb-1">
                         Lokasi Tikungan / Node <span className="text-red-600">*</span>
                     </label>
-                    <input
-                        type="text"
+                    <select
                         required
-                        placeholder="Contoh: Tikungan Cibeureum (NODE-02)"
-                        value={nodeLocation}
-                        onChange={(e) => setNodeLocation(e.target.value)}
+                        value={selectedNodeId}
+                        onChange={(e) => setSelectedNodeId(e.target.value)}
                         className="w-full border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-900 focus:border-gray-900 focus:outline-none"
-                    />
+                    >
+                        {MOCK_NODE_OPTIONS.map((node) => (
+                            <option key={node.id} value={node.id}>
+                                {node.id} - {node.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 {/* 3. Isi Deskripsi */}

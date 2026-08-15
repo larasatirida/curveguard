@@ -1,4 +1,4 @@
-import { Announcement } from "./type";
+import { Announcement } from "@/types";
 
 type ItemPengumumanProps = {
     announcement: Announcement;

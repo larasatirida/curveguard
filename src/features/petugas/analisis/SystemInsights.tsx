@@ -1,4 +1,4 @@
-import { SystemInsight } from "./type";
+import { SystemInsight } from "@/types";
 
 type SystemInsightsProps = {
     insights: SystemInsight[];

@@ -1,54 +1,39 @@
 "use client";
 
-const recentEvents = [
-    { label: "Tikungan Baron Kecepatan tinggi terdeteksi", time: "2 menit lalu", tone: "high" },
-    { label: "Tikungan Cibeureum Kepadatan meningkat", time: "10 menit lalu", tone: "medium" },
-    { label: "Tikungan Sukamaju Kondisi normal", time: "20 menit lalu", tone: "low" },
-];
-
-const toneStyles: Record<string, string> = {
-    high: "text-red-700",
-    medium: "text-yellow-700",
-    low: "text-green-700",
-};
-
-const toneLabels: Record<string, string> = {
-    high: "HIGH",
-    medium: "MEDIUM",
-    low: "LOW",
-};
+import { MOCK_SYSTEM_INSIGHTS } from "@/data/mockData";
 
 export default function RecentEvents() {
+    const events = MOCK_SYSTEM_INSIGHTS.slice(0, 3);
+
     return (
         <section className="h-60 border border-gray-200 bg-white p-4">
             <div className="flex items-center justify-between pb-3 border-b border-gray-100">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-gray-900">
-                    Kejadian Terbaru
+                    Kejadian &amp; Insight Terbaru
                 </h3>
-                <button 
-                    type="button" 
-                    className="text-xs font-medium text-blue-600 hover:text-blue-700 hover:underline"
-                >
-                    Lihat Semua
-                </button>
             </div>
 
-            <div className="divide-y divide-gray-300">
-                {recentEvents.map((item) => (
-                    <div key={item.label} className="flex items-center justify-between gap-4 py-3 first:pt-3 last:pb-0">
+            <div className="divide-y divide-gray-200">
+                {events.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between gap-4 py-3 first:pt-3 last:pb-0">
                         <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-2">
                                 <span className="truncate text-xs font-semibold text-gray-900">
-                                    {item.label}
+                                    {item.title}
                                 </span>
-                                <span className={`inline-flex items-center text-[10px] font-medium ${toneStyles[item.tone]}`}>
-                                    {toneLabels[item.tone]}
+                                <span className={`inline-flex items-center text-[10px] font-bold uppercase ${
+                                    item.type === "warning" ? "text-amber-600" : "text-blue-600"
+                                }`}>
+                                    {item.type}
                                 </span>
                             </div>
+                            <p className="mt-0.5 truncate text-xs text-gray-500">
+                                {item.message}
+                            </p>
                         </div>
 
                         <div className="shrink-0 text-[11px] text-gray-400">
-                            {item.time}
+                            {item.timestamp}
                         </div>
                     </div>
                 ))}

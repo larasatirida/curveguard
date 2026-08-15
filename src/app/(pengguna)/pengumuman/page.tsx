@@ -1,10 +1,12 @@
-import { MOCK_ANNOUNCEMENTS } from "@/features/pengguna/pengumuman/mockdata";
-import AnnouncementTable from "@/features/pengguna/pengumuman/tabelPengumuman";
+"use client";
 
-export default function PengumumanPage() {
+import { MOCK_ANNOUNCEMENTS } from "@/data/mockData";
+import TabelPengumuman from "@/features/pengguna/pengumuman/tabelPengumuman";
+
+export default function PengumumanUserPage() {
     return (
         <section className="space-y-4">
-            <AnnouncementTable announcements={MOCK_ANNOUNCEMENTS} />
+            <TabelPengumuman announcements={MOCK_ANNOUNCEMENTS} />
         </section>
     );
 }

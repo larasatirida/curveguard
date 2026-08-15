@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { INITIAL_REPORTS } from "@/features/petugas/laporan/mockdata";
-import { PublicReport, ReportStatus } from "@/features/petugas/laporan/type";
+import { MOCK_REPORTS } from "@/data/mockData";
+import { PublicReport, ReportStatus } from "@/types";
 import ReportHeader from "@/features/petugas/laporan/reportHeader";
 import ReportFilterTabs from "@/features/petugas/laporan/filterLaporan";
 import ReportTable from "@/features/petugas/laporan/tabel";
 
 export default function LaporanPage() {
-    const [reports, setReports] = useState<PublicReport[]>(INITIAL_REPORTS);
+    const [reports, setReports] = useState<PublicReport[]>(MOCK_REPORTS);
     const [filterStatus, setFilterStatus] = useState<string>("Semua");
 
     const handleStatusUpdate = (reportId: string, newStatus: ReportStatus) => {

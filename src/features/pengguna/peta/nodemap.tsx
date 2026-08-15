@@ -3,13 +3,14 @@
 import { useEffect, useRef } from "react";
 import type { Map as LeafletMap } from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { CurveNode } from "./type";
+import { CurveNode } from "@/types";
 
 type NodeMapProps = {
     nodes: CurveNode[];
+    onSelectNode?: (node: CurveNode) => void;
 };
 
-export default function NodeMap({ nodes }: NodeMapProps) {
+export default function NodeMap({ nodes, onSelectNode }: NodeMapProps) {
     const mapRef = useRef<HTMLDivElement>(null);
     const mapInstanceRef = useRef<LeafletMap | null>(null);
 
@@ -21,18 +22,15 @@ export default function NodeMap({ nodes }: NodeMapProps) {
                 mapInstanceRef.current.remove();
             }
 
-            // Titik tengah peta mencakup area semua node
             const map = L.map(mapRef.current!).setView([-6.898, 107.628], 13);
             mapInstanceRef.current = map;
 
-            // Tile Layer OpenStreetMap
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution:
                     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                 maxZoom: 19,
             }).addTo(map);
 
-            // Tambahkan Marker untuk setiap Node
             nodes.forEach((node) => {
                 const getStatusColor = (status: CurveNode["riskStatus"]) => {
                     switch (status) {
@@ -71,7 +69,6 @@ export default function NodeMap({ nodes }: NodeMapProps) {
                 const statusLabel = getStatusLabel(node.riskStatus);
                 const himbauan = getHimbauanText(node.riskStatus);
 
-                // Custom DivIcon dengan gaya Badge Node
                 const customIcon = L.divIcon({
                     className: "custom-leaflet-marker",
                     html: `
@@ -87,6 +84,7 @@ export default function NodeMap({ nodes }: NodeMapProps) {
                             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
                             white-space: nowrap;
                             text-align: center;
+                            cursor: pointer;
                         ">
                             ${node.id}
                         </div>
@@ -97,7 +95,13 @@ export default function NodeMap({ nodes }: NodeMapProps) {
 
                 const marker = L.marker([node.lat, node.lng], { icon: customIcon }).addTo(map);
 
-                // Tooltip melayang dengan penataan teks rapi agar tidak meluap keluar
+                // Event listener klik pada marker
+                marker.on("click", () => {
+                    if (onSelectNode) {
+                        onSelectNode(node);
+                    }
+                });
+
                 const tooltipContent = `
                     <div style="
                         font-family: sans-serif;
@@ -135,13 +139,12 @@ export default function NodeMap({ nodes }: NodeMapProps) {
                 mapInstanceRef.current = null;
             }
         };
-    }, [nodes]);
+    }, [nodes, onSelectNode]);
 
     return (
         <div className="relative h-[520px] w-full border border-gray-200 overflow-hidden bg-slate-100">
             <div ref={mapRef} className="h-full w-full z-0" />
 
-            {/* Keterangan / Legend Status */}
             <div className="absolute bottom-4 left-4 z-[1000] border border-gray-200 bg-white/95 p-3 text-[11px] text-gray-800 space-y-1.5 rounded shadow-md backdrop-blur-sm">
                 <div className="font-bold text-gray-600 uppercase tracking-wider text-[10px] mb-1">
                     Status Risiko Tikungan

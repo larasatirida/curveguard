@@ -1,4 +1,4 @@
-import { ReportStatus } from "./type";
+import { ReportStatus } from "@/types";
 
 type ReportActionButtonProps = {
     reportId: string;

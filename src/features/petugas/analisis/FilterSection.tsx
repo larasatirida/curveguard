@@ -1,9 +1,11 @@
 "use client";
 
+import { NodeOption } from "@/types";
+
 type FilterSectionProps = {
     selectedNode: string;
     onSelectNode: (nodeId: string) => void;
-    nodeList: { id: string; name: string }[];
+    nodeList: NodeOption[];
 };
 
 export default function FilterSection({

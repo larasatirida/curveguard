@@ -1,10 +1,18 @@
-import { CurveNode } from "./type";
+import { CurveNode } from "@/types";
 
 type NodeDetailPanelProps = {
-    node: CurveNode;
+    node: CurveNode | null;
 };
 
 export default function NodeDetailPanel({ node }: NodeDetailPanelProps) {
+    if (!node) {
+        return (
+            <div className="border border-gray-200 bg-white p-6 text-center text-xs text-gray-500">
+                Pilih salah satu titik node tikungan pada peta untuk menampilkan informasi detail dan himbauan keselamatan.
+            </div>
+        );
+    }
+
     const getStatusStyle = (status: CurveNode["riskStatus"]) => {
         switch (status) {
             case "High":

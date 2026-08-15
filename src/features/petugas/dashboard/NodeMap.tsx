@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { LeafletMapProps } from "./type";
-import { mapMarkers } from "./mockdata";
+import type { LeafletMapProps } from "@/types";
+import { MOCK_MAP_MARKERS } from "@/data/mockData";
 
 const LeafletMap = dynamic<LeafletMapProps>(
     () => import("./LeafletMap").then((mod) => mod.default),
@@ -27,7 +27,7 @@ export default function NodeMap() {
 
             <div className="mt-3 h-80 w-full border border-gray-200 relative z-0">
                 <LeafletMap
-                    mapMarkers={mapMarkers}
+                    mapMarkers={MOCK_MAP_MARKERS}
                     centerPosition={[-0.9485, 100.4735]}
                 />
             </div>

@@ -1,15 +1,12 @@
-import { NodeMetrics } from "./type";
+import { NodeMetrics } from "@/types";
+import { MOCK_NODE_METRICS } from "@/data/mockData";
 
 type VehicleClassificationProps = {
     nodes: NodeMetrics[];
 };
 
 export default function VehicleClassification({ nodes }: VehicleClassificationProps) {
-    const targetNode = nodes[0] || {
-        nodeId: "NODE-03",
-        classificationPct: { motorcycle: 67, car: 28, truck: 5 },
-    };
-
+    const targetNode = nodes.length > 0 ? nodes[0] : MOCK_NODE_METRICS[0];
     const { motorcycle, car, truck } = targetNode.classificationPct;
 
     return (

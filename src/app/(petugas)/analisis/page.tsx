@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import {
-    MOCK_NODES,
-    MOCK_INSIGHTS,
-    MOCK_TREND_DATA,
-} from "@/features/petugas/analisis/mockdata";
+    MOCK_NODE_METRICS,
+    MOCK_SYSTEM_INSIGHTS,
+    MOCK_TREND_POINTS,
+} from "@/data/mockData";
 
 import FilterSection from "@/features/petugas/analisis/FilterSection";
 import SystemInsights from "@/features/petugas/analisis/SystemInsights";
@@ -19,12 +19,21 @@ import SpeedAnalysis from "@/features/petugas/analisis/SpeedAnalysis";
 export default function AnalisisPage() {
     const [selectedNode, setSelectedNode] = useState<string>("ALL");
 
-    const nodeList = MOCK_NODES.map((n) => ({ id: n.nodeId, name: n.nodeName }));
+    // Daftar node untuk filter dropdown dari MOCK_NODE_METRICS
+    const nodeList = MOCK_NODE_METRICS.map((n) => ({
+        id: n.nodeId,
+        name: n.nodeName,
+    }));
 
-    const filteredTrendData =
+    // Filter array NodeMetrics berdasarkan node yang dipilih
+    const filteredNodes =
         selectedNode === "ALL"
-            ? MOCK_TREND_DATA["NODE-ALL"]
-            : MOCK_TREND_DATA[selectedNode] || MOCK_TREND_DATA["NODE-ALL"];
+            ? MOCK_NODE_METRICS
+            : MOCK_NODE_METRICS.filter((n) => n.nodeId === selectedNode);
+
+    // Ambil label node yang sedang dipilih untuk grafik
+    const selectedNodeObj = MOCK_NODE_METRICS.find((n) => n.nodeId === selectedNode);
+    const nodeLabel = selectedNode === "ALL" ? "Semua Node" : selectedNodeObj?.nodeName || selectedNode;
 
     return (
         <section className="space-y-4">
@@ -36,25 +45,25 @@ export default function AnalisisPage() {
             />
 
             {/* Temuan Sistem / Insight Otomatis */}
-            <SystemInsights insights={MOCK_INSIGHTS} />
+            <SystemInsights insights={MOCK_SYSTEM_INSIGHTS} />
 
             {/* Ringkasan Risiko */}
-            <RiskSummaryCards nodes={MOCK_NODES} />
+            <RiskSummaryCards nodes={filteredNodes} />
 
             {/* Grid Ranking & Tren Risiko */}
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                <NodeRankingTable nodes={MOCK_NODES} />
+                <NodeRankingTable nodes={MOCK_NODE_METRICS} />
                 <RiskTrendChart
-                    data={filteredTrendData}
-                    nodeLabel={selectedNode === "ALL" ? "Semua Node" : selectedNode}
+                    data={MOCK_TREND_POINTS}
+                    nodeLabel={nodeLabel}
                 />
             </div>
 
             {/* Grid Volume, Klasifikasi, Kecepatan */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <VolumeAnalysis nodes={MOCK_NODES} />
-                <VehicleClassification nodes={MOCK_NODES} />
-                <SpeedAnalysis nodes={MOCK_NODES} />
+                <VolumeAnalysis nodes={filteredNodes} />
+                <VehicleClassification nodes={filteredNodes} />
+                <SpeedAnalysis nodes={filteredNodes} />
             </div>
         </section>
     );

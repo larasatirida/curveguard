@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { INITIAL_ANNOUNCEMENTS } from "@/features/petugas/pengumuman/mockdata";
-import { Announcement } from "@/features/petugas/pengumuman/type";
+import { MOCK_ANNOUNCEMENTS } from "@/data/mockData";
+import { Announcement } from "@/types";
 import AnnouncementForm from "@/features/petugas/pengumuman/formPengumuman";
 import AnnouncementList from "@/features/petugas/pengumuman/listPengumuman";
 
 export default function PengumumanPage() {
-    const [announcements, setAnnouncements] = useState<Announcement[]>(INITIAL_ANNOUNCEMENTS);
+    const [announcements, setAnnouncements] = useState<Announcement[]>(MOCK_ANNOUNCEMENTS);
 
     const handleAddAnnouncement = (newEntry: Announcement) => {
         setAnnouncements((prev) => [newEntry, ...prev]);

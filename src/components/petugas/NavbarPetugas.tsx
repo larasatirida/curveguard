@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 const NAVIGATION_ITEMS = [
     { label: "Dashboard", href: "/dashboard" },
     { label: "Laporan", href: "/laporan" },
-    { label: "Pengumuman", href: "/pengumuman" },
+    { label: "Pengumuman", href: "/petugas/pengumuman" },
     { label: "Analisis", href: "/analisis" },
 ] as const;
 

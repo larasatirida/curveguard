@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { MOCK_USER_NODES } from "@/features/pengguna/peta/mockdata";
+import { MOCK_CURVE_NODES } from "@/data/mockData";
 
 // Import NodeMap secara dinamis (disable SSR) untuk keamanan Leaflet
 const NodeMap = dynamic(
@@ -17,10 +17,10 @@ const NodeMap = dynamic(
 );
 
 export default function PetaPenggunaPage() {
-    const totalNodes = MOCK_USER_NODES.length;
-    const highRiskCount = MOCK_USER_NODES.filter((n) => n.riskStatus === "High").length;
-    const mediumRiskCount = MOCK_USER_NODES.filter((n) => n.riskStatus === "Medium").length;
-    const lowRiskCount = MOCK_USER_NODES.filter((n) => n.riskStatus === "Low").length;
+    const totalNodes = MOCK_CURVE_NODES.length;
+    const highRiskCount = MOCK_CURVE_NODES.filter((n) => n.riskStatus === "High").length;
+    const mediumRiskCount = MOCK_CURVE_NODES.filter((n) => n.riskStatus === "Medium").length;
+    const lowRiskCount = MOCK_CURVE_NODES.filter((n) => n.riskStatus === "Low").length;
 
     return (
         <section className="space-y-4">
@@ -29,7 +29,7 @@ export default function PetaPenggunaPage() {
                 <h1 className="text-xs font-bold uppercase tracking-wider text-gray-900">
                     Peta Pemantauan Tikungan
                 </h1>
-                <p className="text-[11px] text-gray-500 mt-0.5">
+                <p className="mt-0.5 text-[11px] text-gray-500">
                     Arahkan kursor ke titik node pada peta untuk melihat detail lokasi dan status risiko terkini.
                 </p>
             </div>
@@ -74,7 +74,7 @@ export default function PetaPenggunaPage() {
             </div>
 
             {/* Visualisasi Peta Leaflet / OpenStreetMap */}
-            <NodeMap nodes={MOCK_USER_NODES} />
+            <NodeMap nodes={MOCK_CURVE_NODES} />
         </section>
     );
 }

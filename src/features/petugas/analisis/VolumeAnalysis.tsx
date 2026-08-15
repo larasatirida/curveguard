@@ -1,4 +1,4 @@
-import { NodeMetrics } from "./type";
+import { NodeMetrics } from "@/types";
 
 type VolumeAnalysisProps = {
     nodes: NodeMetrics[];
@@ -6,6 +6,7 @@ type VolumeAnalysisProps = {
 
 export default function VolumeAnalysis({ nodes }: VolumeAnalysisProps) {
     const totalVolume = nodes.reduce((acc, curr) => acc + curr.totalVehicles, 0);
+    const peakHour = nodes.length > 0 ? nodes[0].peakHour : "-";
 
     return (
         <div className="border border-gray-200 bg-white p-4 space-y-3">
@@ -22,7 +23,7 @@ export default function VolumeAnalysis({ nodes }: VolumeAnalysisProps) {
                 </div>
                 <div>
                     <span className="text-[10px] text-gray-500">Peak Hour</span>
-                    <div className="text-xs font-bold font-mono text-gray-900">07.00 - 08.00</div>
+                    <div className="text-xs font-bold font-mono text-gray-900">{peakHour}</div>
                 </div>
             </div>
 

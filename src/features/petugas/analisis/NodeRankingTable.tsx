@@ -1,4 +1,4 @@
-import { NodeMetrics } from "./type";
+import { NodeMetrics } from "@/types";
 
 type NodeRankingTableProps = {
     nodes: NodeMetrics[];

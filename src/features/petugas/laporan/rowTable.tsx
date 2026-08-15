@@ -1,5 +1,6 @@
-import { PublicReport, ReportStatus } from "./type";
+import { PublicReport, ReportStatus } from "@/types";
 import ReportStatusBadge from "./statusLaporan";
+import ReportSourceBadge from "./reportButton"; 
 import ReportImagePreview from "./imageView";
 import ReportActionButton from "./actionButton";
 
@@ -15,12 +16,15 @@ export default function ReportTableRow({ report, onStatusUpdate }: ReportTableRo
                 <div className="font-mono font-bold text-gray-900">{report.id}</div>
                 <div className="text-[10px] text-gray-500 mt-0.5">{report.timestamp}</div>
             </td>
+            {/* Gunakan ReportSourceBadge untuk properti source dan level */}
+            <td className="px-4 py-3 align-top whitespace-nowrap">
+                <ReportSourceBadge source={report.source} level={report.emergencyLevel} />
+            </td>
             <td className="px-4 py-3 align-top whitespace-nowrap font-medium text-gray-900">
                 {report.reporterName}
             </td>
             <td className="px-4 py-3 align-top whitespace-nowrap">
                 <div className="font-semibold text-gray-900">{report.namaTikungan}</div>
-                <div className="text-gray-500">{report.lokasi}</div>
             </td>
             <td className="px-4 py-3 align-top max-w-xs">
                 <p className="text-gray-800 leading-relaxed">{report.deskripsi}</p>
@@ -28,6 +32,7 @@ export default function ReportTableRow({ report, onStatusUpdate }: ReportTableRo
             <td className="px-4 py-3 align-top whitespace-nowrap">
                 <ReportImagePreview imageUrl={report.imageUrl} />
             </td>
+            {/* Gunakan ReportStatusBadge khusus untuk properti status */}
             <td className="px-4 py-3 align-top whitespace-nowrap">
                 <ReportStatusBadge status={report.status} />
             </td>
